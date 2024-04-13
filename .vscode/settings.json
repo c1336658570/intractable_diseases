@@ -55,5 +55,20 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
-  "C_Cpp_Runner.msvcSecureNoWarnings": false
+  "C_Cpp_Runner.msvcSecureNoWarnings": false,
+  "files.associations": {
+    "*.ld": "c",
+    "cstdlib": "c",
+    "*.tcc": "c",
+    "memory": "c",
+    "new": "c",
+    "stdlib.h": "c",
+    "array": "c",
+    "string_view": "c",
+    "initializer_list": "c",
+    "utility": "c",
+    "stdio.h": "c",
+    "unistd.h": "c",
+    "time.h": "c"
+  }
 }
