@@ -1,5 +1,11 @@
 // 针对 vDSO 操作系统还给用户程序暴露了一些接口。我们可以通过 getauxval 找到 vDSO 共享库在当前进程用户态内存中的地址，然后根据共享库文件格式找到对应函数的地址进行调用。
 
+// ldd /bin/ls    可以看到有	linux-vdso.so.1 (0x00007ffcdeac2000)
+// 虽然没有对应的磁盘文件，在文件系统中找不到，但是操作系统在启动进程时已经将其作为虚拟共享库加载过，
+// 所以再次使用 dlopen 时能够正确找到该共享库，然后再使用 dlsym 找到对应的导出函数即可。
+
+// cat /proc/self/maps    也可以看到vdso
+
 #include <elf.h>
 #include <stdio.h>
 #include <string.h>
@@ -9,6 +15,7 @@
 typedef unsigned char u8;
 
 // vdso_sym用于从vdso中查找给定符号名称的地址
+// 先通过 getauxval 函数获取 vDSO 在当前进程中的内存地址，然后根据 ELF 结构进行解析，从而找到指定函数的地址。
 void* vdso_sym(const char* symname) {
   // 通过 getauxval 找到 vDSO 共享库在当前进程用户态内存中的地址，然后根据共享库文件格式找到对应函数的地址进行调用。
   auto vdso_addr = (u8*)getauxval(AT_SYSINFO_EHDR);   // 获取 vDSO 的基地址
