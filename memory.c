@@ -93,6 +93,7 @@ struct malloc_chunk {
 };
 
 int main(void) {
+  while (1);
   char *a = (char *)malloc(30);
   char *b = (char *)malloc(31);
   char *c = (char *)malloc(32);
